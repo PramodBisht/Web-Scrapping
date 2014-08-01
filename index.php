@@ -29,7 +29,45 @@ echo $html->find('ol.skills')[0];
 if(strpos($url,"twitter")!==false)
 {
 	//block for twitter
-	
+	echo $html->find('h1.ProfileHeaderCard-name')[0];
+	try{
+		if(isset($html->find('p.ProfileHeaderCard-bio')[0])==false){
+			throw new Exception("bio is not public"."<br>");
+		}
+		else{
+			echo $html->find('p.ProfileHeaderCard-bio')[0]."<br>";
+		}
+	}
+	catch(Exception $e){
+		echo $e->getMessage();
+
+	}
+
+	try{
+		if(isset($html->find('span.ProfileHeaderCard-locationText')[0])==false){
+			throw new Exception("location is not public"."<br>");
+		}
+		else{
+			echo $html->find('span.ProfileHeaderCard-locationText')[0]."<br>";
+		}
+	}
+	catch(Exception $e){
+		echo $e->getMessage();
+
+	}
+	try{
+		if(isset($html->find('span.ProfileHeaderCard-urlText')[0])==false){
+			throw new Exception("linkedin link is not public"."<br>");
+		}
+		else{
+			echo $html->find('span.ProfileHeaderCard-urlText')[0]."<br>";
+		}
+	}
+	catch(Exception $e){
+		echo $e->getMessage();
+
+	}
+
 }
 else
 if(strpos($url,"angel")>=0){
