@@ -75,8 +75,8 @@ if(strpos($url,"linkedin")!==false){
 	
 	$result=mysqli_query($db,$query);
 	if(!$result){
-		   printf("Error: %s\n", mysqli_error($db));
-    exit();
+		 printf("Error: %s\n", mysqli_error($db));
+   		 exit();
 	}
 	while($row = mysqli_fetch_array($result)) {
 	  echo $row['link'];
@@ -143,6 +143,9 @@ if(strpos($url,"linkedin")!==false){
 	  	$msg.= "skills are changed<br>";
 	  	$q="UPDATE `linkedin` SET `skills`=\"$skill\" WHERE `link`=\"$url\";";
 	  	mysqli_query($db,$q);
+	  }
+	  if($counter!==0||$counter1!==0||$counter2!==0||$counter3!==0||$counter4!==0){
+	  	echo $msg;
 	  }
 
 	}
