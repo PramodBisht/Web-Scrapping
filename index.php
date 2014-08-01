@@ -25,44 +25,41 @@ if(strpos($url,"linkedin")!==false){
 	$designation="";$no_of_connection="";
 	$description=array();
 	$description2=array();
-	//$skills=array();
-	//$skills2=array();
-	
 		
-		$name=$html->find('span.full-name')[0]->plaintext;
-		echo $name."<br>";
-		if(isset($html->find('p.headline-title')[0])==false){
-			$designation="job title is hidden"."<br>";
-		}
-		else{
-			$designation=$html->find('p.headline-title')[0]->plaintext;
-			echo $designation."<br>";
-		}
-		if(isset($html->find('dd.overview-connections')[0])==false){
-			$no_of_connection="0";
-		}
-		else{
-			$no_of_connection=$html->find('dd.overview-connections')[0]->plaintext;
-			$no_of_connection=substr($no_of_connection, 0,strpos($no_of_connection, "+"));
-			echo $no_of_connection."<br>";
-		}
-		if(isset($html->find('p.description')[0])==false){
-			$desc="description is hidden";
-		}
-		else{
-			$desc=$html->find('p.description')[0]->plaintext;
-			str_replace("&#x25ba;",",", $desc);
-			echo $desc;
-		}
-		if(isset($html->find('ol.skills')[0])==false){
-			$skill="skill are not public";
-			
-		}
-		else{
-			echo "My skills sets are<br>";;
-			$skill=$html->find('ol.skills')[0]->plaintext."<br>";
-			echo $skill;
-		}
+	$name=$html->find('span.full-name')[0]->plaintext;
+	echo $name."<br>";
+	if(isset($html->find('p.headline-title')[0])==false){
+		$designation="job title is hidden"."<br>";
+	}
+	else{
+		$designation=$html->find('p.headline-title')[0]->plaintext;
+		echo $designation."<br>";
+	}
+	if(isset($html->find('dd.overview-connections')[0])==false){
+		$no_of_connection="0";
+	}
+	else{
+		$no_of_connection=$html->find('dd.overview-connections')[0]->plaintext;
+		$no_of_connection=substr($no_of_connection, 0,strpos($no_of_connection, "+"));
+		echo $no_of_connection."<br>";
+	}
+	if(isset($html->find('p.description')[0])==false){
+		$desc="description is hidden";
+	}
+	else{
+		$desc=$html->find('p.description')[0]->plaintext;
+		str_replace("&#x25ba;",",", $desc);
+		echo $desc;
+	}
+	if(isset($html->find('ol.skills')[0])==false){
+		$skill="skill are not public";
+		
+	}
+	else{
+		echo "My skills sets are<br>";;
+		$skill=$html->find('ol.skills')[0]->plaintext."<br>";
+		echo $skill;
+	}
 		
 	
 	 	
@@ -79,16 +76,7 @@ if(strpos($url,"linkedin")!==false){
    		 exit();
 	}
 	while($row = mysqli_fetch_array($result)) {
-	  echo $row['link'];
-	  echo "<br>";	
-	  echo $row['Name'];
-	  echo "<br>";
-	  echo $row['designation'];
-	  echo "<br>";
-	  echo $row['connection'];
-	  echo "<br>";
-	  echo $row['description'];
-	  echo "<br>";
+
 	  $counter=0;$counter1=0;$counter2=0;$counter3=0;$counter4=0;
 	  $new=$row['Name'];
 	  $name=trim($name);
@@ -145,19 +133,17 @@ if(strpos($url,"linkedin")!==false){
 	  	mysqli_query($db,$q);
 	  }
 	  if($counter!==0||$counter1!==0||$counter2!==0||$counter3!==0||$counter4!==0){
-	  	echo $msg;
+	  	echo $msg."<br>";
+	  	echo "now trigger the sending email";
 	  }
 
 	}
 	
-	
+	mysqli_close($db);
 
 
-
-mysqli_close($db);
-
-
-}else
+}
+else
 if(strpos($url,"twitter")!==false)
 {
 	//block for twitter
