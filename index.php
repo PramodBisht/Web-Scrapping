@@ -224,10 +224,6 @@ if(strpos($url,"angel")>=0){
 		echo $e->getMessage();
 	}
 	
-	
-	
-	
-	
 	}
 
 }
