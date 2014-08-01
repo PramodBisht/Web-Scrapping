@@ -1,7 +1,7 @@
 
 <html>
 <body>
-<p>put the linkedin, twitter and Angel.co link in a box and fetch the result.
+<p>put the linkedin, twitter and Angel.co link in a box and fetch the result.</p>
 <form action="" type="get">
 	<input type="text" name="url" value="http://in.linkedin.com/in/brijeshbharadwaj"/>
 	<input type="submit">
