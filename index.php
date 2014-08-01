@@ -19,37 +19,41 @@ $html = file_get_html($url); //required for web scrapping
 
 if(strpos($url,"linkedin")!==false){
 	//block for linkedin
-
+	$msg="";
+	$counter=0;
 	try{
 		if(isset($html->find('p.headline-title')[0])==false){
-			throw new Exception("job title is hidden"."<br>");
+			$msg.="job title is hidden"."<br>";
+			$counter++;
 		}
 		else{
 			echo $html->find('p.headline-title')[0]."<br>";
 		}
-	}
-	catch(Exception $e){
-		echo $e->getMessage();
-	}
-	try{
 		if(isset($html->find('dd.overview-connections')[0])==false){
-			throw new Exception("no of connections are hidden"."<br>");
+			$msg.="no of connections are hidden"."<br>";
+			$counter++;
 		}
 		else{
 			echo $html->find('dd.overview-connections')[0]."<br>";
 		}
-	}
-	catch(Exception $e){
-		echo $e->getMessage();
-	}
-
-	try{
 		if(isset($html->find('p.description')[0])==false){
-			throw new Exception("no of connections are hidden"."<br>");
+			$msg.="no of connections are hidden"."<br>";
+			$counter++;
+		}
+		else{
+			echo $html->find('p.description')[0]."<br>";
+		}
+		if(isset($html->find('ol.skills')[0])==false){
+			$msg.="skill are not public";
+			$counter++;
+
 		}
 		else{
 			echo "My skills sets are<br>";;
 			echo $html->find('ol.skills')[0]."<br>";
+		}
+		if($counter!=0){
+			throw new Exception($msg);
 		}
 	}
 	catch(Exception $e){
@@ -61,43 +65,39 @@ if(strpos($url,"linkedin")!==false){
 if(strpos($url,"twitter")!==false)
 {
 	//block for twitter
+	$msg="";
+	$counter=0;
 	echo $html->find('h1.ProfileHeaderCard-name')[0];
 	try{
 		if(isset($html->find('p.ProfileHeaderCard-bio')[0])==false){
-			throw new Exception("bio is not public"."<br>");
+			$msg.="bio is not public"."<br>";
+			$counter++;
 		}
 		else{
 			echo $html->find('p.ProfileHeaderCard-bio')[0]."<br>";
 		}
-	}
-	catch(Exception $e){
-		echo $e->getMessage();
-
-	}
-
-	try{
 		if(isset($html->find('span.ProfileHeaderCard-locationText')[0])==false){
-			throw new Exception("location is not public"."<br>");
+			$msg.="location is not public"."<br>";
+			$counter++;
 		}
 		else{
 			echo $html->find('span.ProfileHeaderCard-locationText')[0]."<br>";
 		}
-	}
-	catch(Exception $e){
-		echo $e->getMessage();
-
-	}
-	try{
 		if(isset($html->find('span.ProfileHeaderCard-urlText')[0])==false){
-			throw new Exception("linkedin link is not public"."<br>");
+			$msg.="linkedin link is not public"."<br>";
+			$counter++;
 		}
 		else{
 			echo $html->find('span.ProfileHeaderCard-urlText')[0]."<br>";
 		}
+		if($counter!=0){
+			throw new Exception($msg);
+			
+		}
+
 	}
 	catch(Exception $e){
 		echo $e->getMessage();
-
 	}
 
 }
@@ -114,7 +114,6 @@ if(strpos($url,"angel")>=0){
 			$msg.="User have not put bio"."<br>";
 			echo $msg;
 			$counter++;
-			//throw new Exception("User have not put bio");
 		}else{
 			echo $bio."<br>";
 		}
@@ -123,7 +122,6 @@ if(strpos($url,"angel")>=0){
 		if(isset($html->find('div.item')[5])==false){
 			$msg.="User have not mention any skills"."<br>";
 			$counter++;
-		//throw new Exception("User have not mention any skills"."<br>");
 		}else{
 			echo "My skills are";
 			echo $html->find('div.item')[5]."<br>";
@@ -131,12 +129,10 @@ if(strpos($url,"angel")>=0){
 		if(isset($html->find('div.item')[6])==false){
 			$msg.="User have not mention oppurtunity he/she is looking for"."<br>";
 			$counter++;
-		//throw new Exception("User have not mention oppurtunity he/she is looking for"."<br>");
 		}else{
 			echo $html->find('div.item')[6]."<br>";
 		}
 		if($counter!=0){
-			//echo "message is ".$msg;
 			throw new Exception($msg);
 			
 		}
