@@ -1,4 +1,4 @@
-<?php 
+ <?php 
 	include('library/simple_html_dom.php');
 	$db=mysqli_connect("localhost","root",NULL,"data");
 	if (mysqli_connect_errno()) {
@@ -13,19 +13,15 @@
 	}
 	while($row = mysqli_fetch_array($result)) {
 		$url=$row['link'];
+		echo  "running for another profile";
 		scrape_linkedin($url);
 		sleep(15);
-		echo "running another loop";
+		
 
 	}
 	function scrape_linkedin($url){
 
 		if(isset($url)&&!empty($url)){
-		  //using the simple html dom php library for web scrapping
-		//echo $url;
-		//$url=$_GET['url'];
-
-
 		$html = file_get_html($url); //required for web scrapping 
 		/* starting of code for the linkedin*/
 		if(strpos($url,"linkedin")!==false){
@@ -35,10 +31,8 @@
 			$counter=0;
 			$skill="";
 			$designation="";$no_of_connection="";
-			
-				
 			$name=$html->find('span.full-name')[0]->plaintext;
-			echo $name."<br>";
+	     	echo $name."<br>";
 
 			if(isset($html->find('p.headline-title')[0])==false){
 				$designation="job title is hidden"."<br>";
@@ -68,7 +62,7 @@
 				
 			}
 			else{
-				echo "My skills sets are<br>";;
+		     	echo "My skills sets are<br>";;
 				$skill=$html->find('ol.skills')[0]->plaintext."<br>";
 				echo $skill;
 			}
@@ -159,13 +153,14 @@
 			  }
 			  if($counter!==0||$counter1!==0||$counter2!==0||$counter3!==0||$counter4!==0){
 			  	echo $msg."<br>";
-			  	echo "now trigger the sending email";
+			  	echo "now trigger the sending email for $name";
 			  }
 
 			}//end of while block
 		} // end of second if block	
 			mysqli_close($db);
 		}
+		echo "<br><br><br><br>";
 	}
 	}
 

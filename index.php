@@ -1,4 +1,3 @@
-
 <html>
 <body>
 <p>put the linkedin, twitter and Angel.co link in a box and fetch the result.</p>
@@ -22,8 +21,8 @@ if(strpos($url,"linkedin")!==false){
 	$counter=0;
 	$skill="";
 	$designation="";$no_of_connection="";
-	
-		
+
+
 	$name=$html->find('span.full-name')[0]->plaintext;
 	echo $name."<br>";
 	if(isset($html->find('p.headline-title')[0])==false){
@@ -51,7 +50,7 @@ if(strpos($url,"linkedin")!==false){
 	}
 	if(isset($html->find('ol.skills')[0])==false){
 		$skill="skill are not public";
-		
+
 	}
 	else{
 		echo "My skills sets are<br>";;
@@ -86,16 +85,7 @@ if(strpos($url,"linkedin")!==false){
 		}else{
 			echo "added to our linkedin table";
 		}
-		/*
-		$query2="INSERT INTO `linkedin_entry`(`url`) VALUES ('$url');";
-		$result=mysqli_query($db,$query);
-		if(!$result){
-			 printf("Error: %s\n", mysqli_error($db));
-   		 	exit();
-		}else{
-			echo "added to our linkedin_entry table";
-		}
-		*/
+		
 	}	
     else{
      //this block will execute only if there is some data available in our db and then it will check for changes
@@ -157,6 +147,8 @@ if(strpos($url,"linkedin")!==false){
 	  if($counter!==0||$counter1!==0||$counter2!==0||$counter3!==0||$counter4!==0){
 	  	echo $msg."<br>";
 	  	echo "now trigger the sending email";
+	  }else{
+	  	echo "every thing is already upto dated";
 	  }
 
 	}
