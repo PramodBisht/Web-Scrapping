@@ -1,0 +1,1 @@
+c:\xampp\php\php.exe c:\xampp\htdocs\scrap\crawler.php
