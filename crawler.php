@@ -154,7 +154,8 @@
 			  }
 			  if($counter!==0||$counter1!==0||$counter2!==0||$counter3!==0||$counter4!==0){
 			  	echo $msg."<br>";
-			  	echo "now trigger the sending email for $name";
+			  	echo "<p style='color:red;'> now trigger the sending email for $name</p>";
+			  	echo "<p  style='color:red'> because changes were observed on profile.</p> ";
 			  }
 
 			}//end of while block
