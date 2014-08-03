@@ -1,4 +1,5 @@
  <?php 
+ 	//ini_set('max_execution_time', 300);
 	include('library/simple_html_dom.php');
 	$db=mysqli_connect("localhost","root",NULL,"data");
 	if (mysqli_connect_errno()) {
@@ -15,7 +16,7 @@
 		$url=$row['link'];
 		echo  "running for another profile";
 		scrape_linkedin($url);
-		sleep(15);
+		//sleep(15);
 		
 
 	}
