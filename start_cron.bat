@@ -1,0 +1,1 @@
+schtasks /create /sc minute /mo 20 /tn "PHP Cron Job" /tr C:\xampp\htdocs\scrap\cron.bat
