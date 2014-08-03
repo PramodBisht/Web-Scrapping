@@ -88,7 +88,7 @@ if(strpos($url,"linkedin")!==false){
 		 printf("Error: %s\n", mysqli_error($db));
    		 exit();
 	}
-	echo $name;
+	//echo $name;
 	if($result->num_rows==0){
 		//then it mean there is no entry of profile found in db
 		$query = "INSERT INTO `linkedin`(`Name`, `designation`, `connection`, `description`, `skills`, `link`) VALUES ('$name','$designation','$no_of_connection','$desc','$skill','$url');";
@@ -101,8 +101,9 @@ if(strpos($url,"linkedin")!==false){
 		}
 	}	
     else{
-	while($row = mysqli_fetch_array($result)) {
 
+	while($row = mysqli_fetch_array($result)) {
+		
 	  $counter=0;$counter1=0;$counter2=0;$counter3=0;$counter4=0;
 	  $new=$row['Name'];
 	  $name=trim($name);
@@ -114,6 +115,7 @@ if(strpos($url,"linkedin")!==false){
 	  $desc=trim($desc);
 	  $desc=str_replace("  ", " ", $desc);
 	  if(strcmp($name,$row['Name'])!==0){
+	  	//echo strlen($row['Name']);
          $counter++;
 	  }
 	  if(strcmp($row['designation'],$designation)!==0){
@@ -130,8 +132,6 @@ if(strpos($url,"linkedin")!==false){
 	  if(strcmp($row['skills'],$skill)!==0){
 	  	 $counter4++;
 	  }
-
-
 	  if($counter!=0){
 	  	$msg.= "name is changed<br>";
 	  	$q="UPDATE `linkedin` SET `Name`=\"$name\" WHERE `link`=\"$url\";";
