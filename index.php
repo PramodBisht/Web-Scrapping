@@ -12,7 +12,6 @@
 <?php
 if(isset($_GET['url'])&&!empty($_GET['url'])){
 include('library/simple_html_dom.php');  //using the simple html dom php library for web scrapping
-
 $url=$_GET['url'];
 
 $html = file_get_html($url); //required for web scrapping 
@@ -64,10 +63,24 @@ if(strpos($url,"linkedin")!==false){
 	
 	 	
 	$db=mysqli_connect("localhost","root",NULL,"data");
+	
 	if (mysqli_connect_errno()) {
 	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
+	$sql = "CREATE TABLE IF NOT EXISTS `linkedin` (
+   `Name` text,
+   `designation` text,
+   `connection` int(11),
+   `description` text,
+   `skills` text,
+   `link` varchar(100)
+   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
+   $result=mysqli_query($db,$sql);
+    if(!$result){
+		 printf("Error: %s\n", mysqli_error($db));
+   		 exit();
+	}
 	$query = "SELECT * FROM `linkedin` WHERE `link`=\"$url\";";
 	
 	$result=mysqli_query($db,$query);
@@ -75,6 +88,19 @@ if(strpos($url,"linkedin")!==false){
 		 printf("Error: %s\n", mysqli_error($db));
    		 exit();
 	}
+	echo $name;
+	if($result->num_rows==0){
+		//then it mean there is no entry of profile found in db
+		$query = "INSERT INTO `linkedin`(`Name`, `designation`, `connection`, `description`, `skills`, `link`) VALUES ('$name','$designation','$no_of_connection','$desc','$skill','$url');";
+		$result=mysqli_query($db,$query);
+		if(!$result){
+			 printf("Error: %s\n", mysqli_error($db));
+   		 	exit();
+		}else{
+			echo "added to our database";
+		}
+	}	
+    else{
 	while($row = mysqli_fetch_array($result)) {
 
 	  $counter=0;$counter1=0;$counter2=0;$counter3=0;$counter4=0;
@@ -138,6 +164,7 @@ if(strpos($url,"linkedin")!==false){
 	  }
 
 	}
+}
 	
 	mysqli_close($db);
 
