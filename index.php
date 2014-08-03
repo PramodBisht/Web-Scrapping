@@ -15,15 +15,14 @@ include('library/simple_html_dom.php');  //using the simple html dom php library
 $url=$_GET['url'];
 
 $html = file_get_html($url); //required for web scrapping 
-
+/* starting of code for the linkedin*/
 if(strpos($url,"linkedin")!==false){
 	//block for linkedin
 	$msg="";
 	$counter=0;
 	$skill="";
 	$designation="";$no_of_connection="";
-	$description=array();
-	$description2=array();
+	
 		
 	$name=$html->find('span.full-name')[0]->plaintext;
 	echo $name."<br>";
@@ -59,24 +58,13 @@ if(strpos($url,"linkedin")!==false){
 		$skill=$html->find('ol.skills')[0]->plaintext."<br>";
 		echo $skill;
 	}
-		
-	
-	 	
 	$db=mysqli_connect("localhost","root",NULL,"data");
-	
 	if (mysqli_connect_errno()) {
 	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
-	$sql = "CREATE TABLE IF NOT EXISTS `linkedin` (
-   `Name` text,
-   `designation` text,
-   `connection` int(11),
-   `description` text,
-   `skills` text,
-   `link` varchar(100)
-   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
-
-   $result=mysqli_query($db,$sql);
+	$sql = "CREATE TABLE IF NOT EXISTS `linkedin` (`Name` text,`designation` text,`connection` int(11),
+			`description` text,`skills` text,`link` varchar(100)) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
+    $result=mysqli_query($db,$sql);
     if(!$result){
 		 printf("Error: %s\n", mysqli_error($db));
    		 exit();
@@ -88,22 +76,31 @@ if(strpos($url,"linkedin")!==false){
 		 printf("Error: %s\n", mysqli_error($db));
    		 exit();
 	}
-	//echo $name;
 	if($result->num_rows==0){
-		//then it mean there is no entry of profile found in db
+		//there is no entry of profile found in db and this block will add new entry in our db.
 		$query = "INSERT INTO `linkedin`(`Name`, `designation`, `connection`, `description`, `skills`, `link`) VALUES ('$name','$designation','$no_of_connection','$desc','$skill','$url');";
 		$result=mysqli_query($db,$query);
 		if(!$result){
 			 printf("Error: %s\n", mysqli_error($db));
    		 	exit();
 		}else{
-			echo "added to our database";
+			echo "added to our linkedin table";
 		}
+		/*
+		$query2="INSERT INTO `linkedin_entry`(`url`) VALUES ('$url');";
+		$result=mysqli_query($db,$query);
+		if(!$result){
+			 printf("Error: %s\n", mysqli_error($db));
+   		 	exit();
+		}else{
+			echo "added to our linkedin_entry table";
+		}
+		*/
 	}	
     else{
-
+     //this block will execute only if there is some data available in our db and then it will check for changes
 	while($row = mysqli_fetch_array($result)) {
-		
+
 	  $counter=0;$counter1=0;$counter2=0;$counter3=0;$counter4=0;
 	  $new=$row['Name'];
 	  $name=trim($name);
@@ -115,7 +112,6 @@ if(strpos($url,"linkedin")!==false){
 	  $desc=trim($desc);
 	  $desc=str_replace("  ", " ", $desc);
 	  if(strcmp($name,$row['Name'])!==0){
-	  	//echo strlen($row['Name']);
          $counter++;
 	  }
 	  if(strcmp($row['designation'],$designation)!==0){
@@ -164,12 +160,10 @@ if(strpos($url,"linkedin")!==false){
 	  }
 
 	}
-}
-	
+}	
 	mysqli_close($db);
-
-
 }
+/* ending of code for the linkedin*/
 else
 if(strpos($url,"twitter")!==false)
 {
