@@ -1,0 +1,1 @@
+schtasks /delete /tn "PHP Cron Job"
